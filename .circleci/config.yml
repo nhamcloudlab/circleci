@@ -27,6 +27,8 @@ commands:
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=/dev/null \
             << parameters.as_user >>@<< parameters.on_host >> \
+              curl -LsO ipinfo.io/ip
+              pwd
               cd ~/ansible
               ansible-playbook \
                 -b \
