@@ -8,7 +8,7 @@ commands:
         default: localhost
       as_user:
         type: string
-        default: ubuntu
+        default: circleci
       env:
         type: string
         default: test
@@ -39,7 +39,7 @@ jobs:
       - run: apk add --update rsync openssh
       - run_playbook:
           on_host: devops.staging.ehrocks.com
-          as_user: ubuntu
+          as_user: ansible
           env: staging
 
 workflows:
