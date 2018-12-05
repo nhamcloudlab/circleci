@@ -1,13 +1,44 @@
-version: 2
+version: 2.1
+
+commands:
+  run_playbook:
+    parameters:
+      on_host:
+        type: string
+        default: localhost
+      as_user:
+        type: string
+        default: ubuntu
+      env:
+        type: string
+        default: test
+      playbook:
+        type: string
+        default: all.yaml
+    steps:
+      - run: rsync -a . << parameters.as_user >>@<< parameters.on_host ~/ansible
+      - run: |
+          ssh << parameters.as_user >>@<< parameters.on_host >> \
+            cd ~/ansible
+            ansible-playbook \
+              -b \
+              -i inventory/<< parameters.env >>/static \
+              playbooks/<< parameters.env >>/<< parameters.playbook >>
+
 jobs:
-  build:
-    docker:
-      - image: debian:stretch
+  run_against_staging:
+    #docker:
+    #  - image: williamyeh/ansible:alpine3
     steps:
       - checkout
-      - run:
-          name: Greeting
-          command: echo Hello, world.
-      - run:
-          name: Print the Current Time
-          command: date
+      - run_playbook:
+          on_host: devops.staging.ehrocks.com
+          as_user: ubuntu
+          env: staging
+
+workflows:
+  version: 2
+  run_ansible_playbook:
+    jobs:
+      - run_against_staging
+
