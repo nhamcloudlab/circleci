@@ -27,10 +27,11 @@ commands:
 
 jobs:
   run_against_staging:
-    #docker:
-    #  - image: williamyeh/ansible:alpine3
+    docker:
+      - image: alpine
     steps:
       - checkout
+      - run: apk add --update rsync openssh
       - run_playbook:
           on_host: devops.staging.ehrocks.com
           as_user: ubuntu
