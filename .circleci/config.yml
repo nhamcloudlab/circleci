@@ -23,12 +23,15 @@ commands:
             . \
             << parameters.as_user >>@<< parameters.on_host >>:~/ansible
       - run: |
-          ssh << parameters.as_user >>@<< parameters.on_host >> \
-            cd ~/ansible
-            ansible-playbook \
-              -b \
-              -i inventory/<< parameters.env >>/static \
-              playbooks/<< parameters.env >>/<< parameters.playbook >>
+          ssh \
+            -o StrictHostKeyChecking=no \
+            -o UserKnownHostsFile=/dev/null \
+            << parameters.as_user >>@<< parameters.on_host >> \
+              cd ~/ansible
+              ansible-playbook \
+                -b \
+                -i inventory/<< parameters.env >>/static \
+                playbooks/<< parameters.env >>/<< parameters.playbook >>
 
 jobs:
   run_against_staging:
