@@ -16,7 +16,7 @@ commands:
         type: string
         default: all.yaml
     steps:
-      - run: rsync -a . << parameters.as_user >>@<< parameters.on_host >> ~/ansible
+      - run: rsync -a . << parameters.as_user >>@<< parameters.on_host >>:~/ansible
       - run: |
           ssh << parameters.as_user >>@<< parameters.on_host >> \
             cd ~/ansible
