@@ -41,16 +41,14 @@ jobs:
       - image: alpine
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run: docker build -t nhamcloudlab/circleci:test
   test:
     docker:
       - image: nhamcloudlab/circleci:test
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run: "true"
 
 workflows:
