@@ -36,20 +36,29 @@ commands:
             "
 
 jobs:
-  run_against_staging:
+  build:
     docker:
       - image: alpine
     steps:
-      - run: apk add --update git rsync openssh
       - checkout
-      - run_playbook:
-          on_host: devops.staging.ehrocks.com
-          as_user: ansible
-          env: staging
+      - setup_remote_docker:
+        docker_layer_caching: true
+      - run: docker build -t nhamcloudlab/circleci:test
+  test:
+    docker:
+      - image: nhamcloudlab/circleci:test
+    steps:
+      - checkout
+      - setup_remote_docker:
+        docker_layer_caching: true
+      - run: true
 
 workflows:
   version: 2
   run_ansible_playbook:
     jobs:
-      - run_against_staging
+      - build
+      - test:
+        requires:
+          - build
 
