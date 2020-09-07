@@ -42,7 +42,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-        docker_layer_caching: true
+          docker_layer_caching: true
       - run: docker build -t nhamcloudlab/circleci:test
   test:
     docker:
@@ -50,7 +50,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-        docker_layer_caching: true
+          docker_layer_caching: true
       - run: true
 
 workflows:
@@ -60,5 +60,5 @@ workflows:
       - build
       - test:
         requires:
-          - build
+        - build
 
