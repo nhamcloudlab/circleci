@@ -42,7 +42,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker build -t nhamcloudlab/circleci:test
+      - run: docker build -t nhamcloudlab/circleci:test .
   test:
     docker:
       - image: nhamcloudlab/circleci:test
