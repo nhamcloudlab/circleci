@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apt update -qq && apt install -y build-essential libpq-dev yarn
 
 COPY ./Gemfile* ./
-RUN bundle install --with=default --deployment \
+RUN bundle install --with="default production" --deployment \
       && yarn install \
       && bundle exec rake assets:precompile
 
