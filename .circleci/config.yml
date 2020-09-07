@@ -38,7 +38,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: alpine
+      - image: docker:dind
     steps:
       - checkout
       - setup_remote_docker
